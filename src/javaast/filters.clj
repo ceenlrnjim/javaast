@@ -39,6 +39,13 @@
                         ; String <- Attribute$Contant.getValue() <- AnnotationValue.getValue()
     (when (seq matches) (.getValue (.getValue (first matches))))))
 
+(defn get-annotation-mirror
+  [element annotation-name]
+  (let [matches (filter 
+                  #(.contentEquals (.getQualifiedName (.asElement (.getAnnotationType %))) annotation-name) 
+                  (.getAnnotationMirrors element))]
+    (when (seq matches) (first matches))))
+
 (defn annotation-attributes-match?
   "Tests if the specified annotation mirror has the specified values for its attributes.
    attributes is a map of attribute names(strings) to attribute values (objects)"
